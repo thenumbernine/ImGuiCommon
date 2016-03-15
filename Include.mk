@@ -21,4 +21,3 @@ INCLUDE+=$(HOME)/include/SDL2
 post_builddist_osx_app::
 	install_name_tool dist/osx/debug/test.app/Contents/MacOS/test -change libimgui.dylib @executable_path/../Resources/lib/libimgui.dylib
 	install_name_tool dist/osx/debug/test.app/Contents/MacOS/test -change libimgui_impl_sdl.dylib @executable_path/../Resources/lib/libimgui_impl_sdl.dylib
-

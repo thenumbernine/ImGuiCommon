@@ -1,25 +1,23 @@
-#include "ImGUICommon/ImGUICommon.h"
+#include "ImGuiCommon/ImGuiCommon.h"
 #include "GLApp/GLApp.h"
 
 struct Test : public GLApp::GLApp {
 	typedef ::GLApp::GLApp Super;
-	std::shared_ptr<ImGUICommon::ImGUICommon> gui;
-
+	std::shared_ptr<ImGuiCommon::ImGuiCommon> gui;
 
     bool show_test_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImColor(114, 144, 154);
 
-
 	//post-sdl and gl init:
 	virtual void init() {
 		Super::init();
-		gui = std::make_shared<ImGUICommon::ImGUICommon>(window);
+		gui = std::make_shared<ImGuiCommon::ImGuiCommon>(window);
 	}
 
 	virtual void shutdown() {
-		Super::shutdown();
 		gui = nullptr;	//dealloc and shutdown before sdl shuts down
+		Super::shutdown();
 	}
 
 	virtual void update() {

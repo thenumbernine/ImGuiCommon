@@ -3,22 +3,22 @@
 //This is just a class wrapper of imgui_impl_sdl.cpp/.h
 
 #include "imgui.h"	//IMGUI_API
-#include "ImGUICommon/imgui_impl_sdl.h"
+#include "ImGuiCommon/imgui_impl_sdl.h"
 #include <OpenGL/gl.h>	//glViewport
 #include <functional>
 
-namespace ImGUICommon {
+namespace ImGuiCommon {
 
-struct ImGUICommon {
+struct ImGuiCommon {
 	SDL_Window* window;
 
-	ImGUICommon(SDL_Window* window_)
+	ImGuiCommon(SDL_Window* window_)
 	: window(window_)
 	{
 		ImGui_ImplSdl_Init(window);
 	}
 
-	virtual ~ImGUICommon() {
+	virtual ~ImGuiCommon() {
 		ImGui_ImplSdl_Shutdown();
 	}
 

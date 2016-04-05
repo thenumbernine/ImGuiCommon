@@ -1,9 +1,9 @@
-ImGUI wrapper for ImGUI's  sdl_opengl_example wrapper for ImGUI
+ImGui wrapper for ImGui's  sdl_opengl_example wrapper for ImGui
 
 To get this working:
 
-1) build ImGUI into libimgui.so/.dylib/whatever and put it in this project's lib folder 
+1) build ImGui into libimgui.so/.dylib/whatever and put it in this project's lib folder 
 2) build the sdl_opengl_example file (but not its main.c) into libimgui_impl_sdl.dylib and put it in this project's lib folder
-3) put all the .h files of both ImGUI and the sdl_opengl_example in this project's include/ImGUICommon folder
+3) put all the .h files of ImGui and the sdl_opengl_example into the include/ folder
 
-viola?
+Viola?

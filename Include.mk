@@ -2,7 +2,6 @@ IMGUICOMMON_PATH:=$(dir $(lastword $(MAKEFILE_LIST)))
 
 #technically these, as well as the imgui headers, should be put in some /usr/wherever/ folder
 DYNAMIC_LIBS+=$(IMGUICOMMON_PATH)lib/libimgui.dylib
-DYNAMIC_LIBS+=$(IMGUICOMMON_PATH)lib/libimgui_impl_sdl.dylib
 
 # and technically all that should be in here is my ImGuiCommon wrapper class header
 INCLUDE+=$(IMGUICOMMON_PATH)include
@@ -20,4 +19,3 @@ INCLUDE+=$(HOME)/include/SDL2
 # ... but at least my own built libs are
 post_builddist_osx_app::
 	install_name_tool -change libimgui.dylib @executable_path/../Resources/lib/libimgui.dylib $(DIST)
-	install_name_tool -change libimgui_impl_sdl.dylib @executable_path/../Resources/lib/libimgui_impl_sdl.dylib $(DIST)

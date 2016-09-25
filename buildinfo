@@ -1,0 +1,9 @@
+distName='ImGuiCommon'
+distType='inc'
+function depend(cwd)
+	include:insert(cwd..'/include')
+	if platform == 'linux' then
+		include:insert'/usr/include/SDL2'
+	end
+	dynamicLibs:insert(cwd..'/lib/'..libPrefix..'imgui'..libSuffix)
+end

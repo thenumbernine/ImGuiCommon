@@ -1,5 +1,6 @@
 #include "ImGuiCommon/ImGuiCommon.h"
 #include "GLApp/GLApp.h"
+#include <memory>
 
 struct Test : public GLApp::GLApp {
 	typedef ::GLApp::GLApp Super;

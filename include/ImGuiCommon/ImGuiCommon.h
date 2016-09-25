@@ -4,7 +4,7 @@
 
 #include "imgui.h"	//IMGUI_API
 #include "imgui_impl_sdl.h"
-#include <OpenGL/gl.h>	//glViewport
+#include "Common/gl.h"
 #include <functional>
 
 namespace ImGuiCommon {

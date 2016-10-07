@@ -1,9 +1,15 @@
 distName='ImGuiCommon'
 distType='inc'
-function depend(cwd)
+if platform == 'msvc' then
+	dynamicLibs:insert(cwd..'/lib/imgui.lib')
+	dynamicLibs:append{'user32.lib', 'imm32.lib'}
+end
+if including then
 	include:insert(cwd..'/include')
 	if platform == 'linux' then
 		include:insert'/usr/include/SDL2'
 	end
-	dynamicLibs:insert(cwd..'/lib/'..libPrefix..'imgui'..libSuffix)
+	if platform ~= 'msvc' then
+		dynamicLibs:insert(cwd..'/lib/'..libPrefix..'imgui'..libSuffix)
+	end
 end

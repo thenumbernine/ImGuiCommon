@@ -1,0 +1,47 @@
+HEADERS=imgui.h imgui_internal.h imconfig.h stb_rect_pack.h stb_textedit.h stb_truetype.h
+#CXX=g++-mp-4.8
+#CXX=clang++
+CXX=g++
+CXXFLAGS= -Wall -fPIC
+#CXXFLAGS+= -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS
+#CXXFLAGS+= -DIMGUI_DEFINE_PLACEMENT_NEW
+CXXFLAGS+= -I. -I../cimgui -I/usr/include/SDL2
+#LDFLAGS=-dynamiclib
+#LDFLAGS+= -undefined suppress
+#LDFLAGS+= -flat_namespace
+#LDFLAGS=-dynamiclib -framework OpenGL -L$(HOME)/lib -lSDL2
+#LDFLAGS=-dynamiclib -framework OpenGL $(LUAJIT_LIBPATH)/bin/OSX/sdl.dylib
+LDFLAGS=-shared
+
+
+.PHONY: all
+all: libimgui.so
+
+imgui.o: imgui.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+imgui_draw.o: imgui_draw.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# correct me if I'm wrong, but this is only used by the demos, not by the ImGUI library or the umbrella libraries, right?
+# nope, it looks like imgui.h links to it, esp ShowTestWindow
+imgui_demo.o: imgui_demo.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+imgui_impl_sdl.o: examples/sdl_opengl2_example/imgui_impl_sdl.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+cimgui.o: ../cimgui/cimgui/cimgui.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+libimgui.so: imgui.o cimgui.o imgui_draw.o imgui_demo.o imgui_impl_sdl.o
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+
+.PHONY: clean
+clean:
+	-rm cimgui.o
+	-rm imgui.o
+	-rm imgui_demo.o
+	-rm imgui_draw.o
+	-rm imgui_impl_sdl.o
+	-rm libimgui.so

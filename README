@@ -1,10 +1,27 @@
-ImGui wrapper for ImGui's sdl_opengl_example wrapper for ImGui v1.48
+ImGui wrapper for ImGui's sdl_opengl2_example wrapper for ImGui v1.53
 
 To get this working:
 
-1) change the ImGui Makefile to include examples/sdl_opengl_example/imgui_impl_sdl.cpp in the list of source files
-2) build ImGui into libimgui.so/.dylib/.dll
-3) Put the libimgui.so/.dylib/.dll in this project's lib/ folder 
-4) put all the .h files of ImGui and the examples/sdl_opengl_example/imgui_impl_sdl.h into this project's include/ folder
+1) change the ImGui Makefile to include examples/sdl_opengl2_example/imgui_impl_sdl.cpp in the list of source files
+2) Fix the IMGUI_API definitions in imconfig.h make the following replacement:
+replace this:
+	
+	//#define IMGUI_API __declspec( dllexport )
+	//#define IMGUI_API __declspec( dllimport )
+	
+with this:
+	
+	#ifdef BUILDING_IMGUI_DLL
+	#define IMGUI_API __declspec( dllexport )
+	#else
+	#define IMGUI_API __declspec( dllimport )
+	#endif
 
-Viola?
+3) add 'extern "C" { }' wrapper around examples/sdl_opengl2_example/imgui_impl_sdl.h
+
+4) build ImGui into libimgui.so/.dylib/.dll:
+	copy the imgui-help\Makefile.nmake into the imgui folder (since it no longer comes with one)
+	run nmake /f Makefile.nmake
+
+5) Put the libimgui.so/.dylib/.dll in this project's lib/ folder 
+6) put all the .h files of ImGui and the examples/sdl_opengl2_example/imgui_impl_sdl.h into this project's include/ folder

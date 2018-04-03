@@ -1,0 +1,44 @@
+CPPFLAGS= /EHsc /MD \
+	/I. /IC:\Users\Christopher\include \
+	/DBUILDING_IMGUI_DLL /D_WIN32
+SDL2_DIR = ..\SDL2-devel-2.0.8-VC\lib\x64
+
+all: imgui.dll
+
+.PHONY: all
+
+imgui.dll: imgui.obj imgui_demo.obj imgui_draw.obj imgui_impl_sdl.obj cimgui.obj
+	link.exe /dll /out:$@ $** opengl32.lib $(SDL2_DIR)\SDL2.lib
+	dumpbin /exports $@ > exports.txt
+	cat exports.txt
+	echo LIBRARY IMGUI > imgui.def
+	echo EXPORTS >> imgui.def
+	for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> imgui.def
+	lib.exe /def:imgui.def /out:imgui.lib
+
+imgui.obj: imgui.cpp
+	cl.exe $(CPPFLAGS) /c /Fo$@ $** 
+
+imgui_demo.obj: imgui_demo.cpp
+	cl.exe $(CPPFLAGS) /c /Fo$@ $** 
+
+imgui_draw.obj: imgui_draw.cpp
+	cl.exe $(CPPFLAGS) /c /Fo$@ $** 
+
+imgui_impl_sdl.obj: examples\sdl_opengl2_example\imgui_impl_sdl.cpp
+	cl.exe $(CPPFLAGS) /c /Fo$@ $**
+
+cimgui.obj: ..\cimgui\cimgui\cimgui.cpp
+	cl.exe $(CPPFLAGS) /c /Fo$@ $**
+
+clean:
+	del *.dll *.obj
+
+.PHONY: clean
+
+dist:
+	copy /Y imgui.lib ..\..\lua\bin\Windows\x64\
+	
+	copy /Y imgui.dll ..\..\lua\bin\Windows\x64\
+
+.PHONY: dist

@@ -3,7 +3,7 @@
 #include <memory>
 
 struct Test : public GLApp::GLApp {
-	typedef ::GLApp::GLApp Super;
+	using Super = ::GLApp::GLApp;
 	std::shared_ptr<ImGuiCommon::ImGuiCommon> gui;
 
     bool show_test_window = true;

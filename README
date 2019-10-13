@@ -1,27 +1,11 @@
-ImGui wrapper for ImGui's sdl_opengl2_example wrapper for ImGui v1.53
+ImGui wrapper for ImGui, SDL, and OpenGL2 
+Uses cimgui / imgui v1.70
 
 To get this working:
 
-1) change the ImGui Makefile to include examples/sdl_opengl2_example/imgui_impl_sdl.cpp in the list of source files
-2) Fix the IMGUI_API definitions in imconfig.h make the following replacement:
-replace this:
-	
-	//#define IMGUI_API __declspec( dllexport )
-	//#define IMGUI_API __declspec( dllimport )
-	
-with this:
-	
-	#ifdef BUILDING_IMGUI_DLL
-	#define IMGUI_API __declspec( dllexport )
-	#else
-	#define IMGUI_API __declspec( dllimport )
-	#endif
-
-3) add 'extern "C" { }' wrapper around examples/sdl_opengl2_example/imgui_impl_sdl.h
-
-4) build ImGui into libimgui.so/.dylib/.dll:
-	copy the imgui-help\Makefile.nmake into the imgui folder (since it no longer comes with one)
-	run nmake /f Makefile.nmake
-
-5) Put the libimgui.so/.dylib/.dll in this project's lib/ folder 
-6) put all the .h files of ImGui and the examples/sdl_opengl2_example/imgui_impl_sdl.h into this project's include/ folder
+1) cmake cimgui.  make sure msvc uses 64-bit via "cmake -DCMAKE_GENERATOR_PLATFORM=x64 <dir>"
+2) change solution to include examples/imgui_impl_sdl.cpp and examples/imgui_impl_opengl2.cpp in the list of source files
+	don't forget to add OpenGL.lib, SDL.lib, and SDLmain.lib to your project ... and add the appropriate GL and SDL include paths
+3) build cimgui.so/.dylib/.dll:
+5) Put the cimgui.so/.dylib/.dll in this project's folder lib/ folder 
+6) put all the .h files of cimgui, imgui, of examples/imgui_impl_sdl.h, and of examples/imgui_impl_opengl2.h into this project's include/ folder

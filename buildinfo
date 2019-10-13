@@ -1,15 +1,22 @@
 distName='ImGuiCommon'
 distType='inc'
-if platform == 'msvc' then
-	dynamicLibs:insert(cwd..'/lib/imgui.lib')
-	dynamicLibs:append{'user32.lib', 'imm32.lib'}
+include:insert(cwd..'/include')
+if platform == 'linux' then
+	include:insert'/usr/include/SDL2'
 end
-if including then
-	include:insert(cwd..'/include')
-	if platform == 'linux' then
-		include:insert'/usr/include/SDL2'
-	end
-	if platform ~= 'msvc' then
-		dynamicLibs:insert(cwd..'/lib/'..libPrefix..'imgui'..libSuffix)
-	end
+macros:append{
+	'IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1',
+	'CIMGUI_DEFINE_ENUMS_AND_STRUCTS',
+}
+if platform == 'msvc' then
+	dynamicLibs:append{cwd..'/lib/cimgui.lib', 'user32.lib', 'imm32.lib'}
+
+	macros:append{
+		'IMGUI_IMPL_API=extern "C" __declspec(dllexport)',
+	}
+else
+	dynamicLibs:insert(cwd..'/lib/'..libPrefix..'cimgui'..libSuffix)
+	macros:append{
+		'IMGUI_IMPL_API=extern "C" ',
+	}
 end

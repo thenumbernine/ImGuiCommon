@@ -61,6 +61,11 @@ struct Test : public GLApp::GLApp {
 	
 		});
 	}
+
+	virtual void sdlEvent(SDL_Event& event) {
+		Super::sdlEvent(event);
+		gui->sdlEvent(event);
+	}
 };
 
 GLAPP_MAIN(Test)

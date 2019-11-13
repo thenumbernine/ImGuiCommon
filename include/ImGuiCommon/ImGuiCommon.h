@@ -12,7 +12,7 @@
 namespace ImGuiCommon {
 
 struct ImGuiCommon {
-	SDL_Window* window;
+	SDL_Window* window = {};
 
 	ImGuiCommon(SDL_Window* window_, SDL_GLContext context)
 	: window(window_)
@@ -29,11 +29,11 @@ struct ImGuiCommon {
 		igDestroyContext(nullptr);
 	}
 
-	void sdlEvent(SDL_Event& event) {
+	void onSDLEvent(SDL_Event& event) {
 		ImGui_ImplSDL2_ProcessEvent(&event);
 	}
 
-	void update(std::function<void()> callback) {
+	void onUpdate(std::function<void()> callback) {
 		ImGui_ImplOpenGL2_NewFrame();
 		ImGui_ImplSDL2_NewFrame(window);
 		igNewFrame();

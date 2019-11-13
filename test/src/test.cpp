@@ -4,31 +4,22 @@
 
 struct Test : public GLApp::GLApp {
 	using Super = ::GLApp::GLApp;
-	std::shared_ptr<ImGuiCommon::ImGuiCommon> gui;
+	std::shared_ptr<ImGuiCommon::ImGuiCommon> gui = std::make_shared<ImGuiCommon::ImGuiCommon>(window, context);
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
 	ImColor clear_color = {{114, 144, 154}};
 
+	using Super::Super;
+
 	virtual int getSDLInitFlags() {
 		return SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER;
 	}
+	
+	virtual void onUpdate() {
+		Super::onUpdate();
 
-	//post-sdl and gl init:
-	virtual void init() {
-		Super::init();
-		gui = std::make_shared<ImGuiCommon::ImGuiCommon>(window, context);
-	}
-
-	virtual void shutdown() {
-		gui = nullptr;	//dealloc and shutdown before sdl shuts down
-		Super::shutdown();
-	}
-
-	virtual void update() {
-		Super::update();
-
-		gui->update([&](){
+		gui->onUpdate([&](){
 
 
 			// 1. Show a simple window
@@ -62,9 +53,9 @@ struct Test : public GLApp::GLApp {
 		});
 	}
 
-	virtual void sdlEvent(SDL_Event& event) {
-		Super::sdlEvent(event);
-		gui->sdlEvent(event);
+	virtual void onSDLEvent(SDL_Event& event) {
+		Super::onSDLEvent(event);
+		gui->onSDLEvent(event);
 	}
 };
 

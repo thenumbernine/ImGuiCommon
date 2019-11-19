@@ -4,7 +4,7 @@
 
 struct Test : public GLApp::GLApp {
 	using Super = ::GLApp::GLApp;
-	std::shared_ptr<ImGuiCommon::ImGuiCommon> gui = std::make_shared<ImGuiCommon::ImGuiCommon>(window, context);
+	std::shared_ptr<ImGuiCommon::ImGuiCommon> gui;
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
@@ -15,7 +15,17 @@ struct Test : public GLApp::GLApp {
 	virtual int getSDLInitFlags() {
 		return SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER;
 	}
-	
+
+	virtual const char* getTitle() {
+		return "ImGui Test";
+	}
+
+	virtual void init(const Init& args) {
+		Super::init(args);
+		//needs to go in init, after the GL stuff is initialized (which goes after ctor, after vtable is initialized)
+		gui = std::make_shared<ImGuiCommon::ImGuiCommon>(window, context);
+	}
+
 	virtual void onUpdate() {
 		Super::onUpdate();
 

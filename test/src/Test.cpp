@@ -8,7 +8,7 @@ struct Test : public GLApp::GLApp {
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
-	ImColor clear_color = {{114, 144, 154}};
+	ImColor clear_color = {114, 144, 154};
 
 	using Super::Super;
 

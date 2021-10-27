@@ -2,6 +2,8 @@
 
 //This is just a class wrapper of imgui_impl_sdl.cpp/.h
 
+#include "imgui.h"
+#include "imgui_internal.h"
 #include "cimgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl2.h"

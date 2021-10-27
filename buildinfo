@@ -6,7 +6,10 @@ if platform == 'linux' then
 end
 macros:append{
 	'IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1',
-	'CIMGUI_DEFINE_ENUMS_AND_STRUCTS',
+	
+	-- with this, it's finding duplicate defs of ImS64 from ImGuiCommon.h => imgui_impl_sdl.h => imgui.h ...
+	-- without this, it gets errors in cimgui.h ...
+	--'CIMGUI_DEFINE_ENUMS_AND_STRUCTS',
 }
 if platform == 'msvc' then
 	dynamicLibs:append{cwd..'/lib/cimgui.lib', 'user32.lib', 'imm32.lib'}
@@ -16,11 +19,11 @@ if platform == 'msvc' then
 	}
 elseif platform == 'linux' then
 	-- same as addDependLib
-	libs:insert'cimgui'
-	libpaths:insert(cwd..'/lib/')
+	libs:insert'cimgui_sdl'
+	--libpaths:insert(cwd..'/lib/')
 	if including then
-		--env:addDependLib('cimgui', cwd..'/lib/')
-		dependLibs:insert(cwd..'/lib/'..libPrefix..'cimgui'..libSuffix)
+		--env:addDependLib('cimgui_sdl', cwd..'/lib/')
+		--dependLibs:insert(cwd..'/lib/'..libPrefix..'cimgui_sdl'..libSuffix)
 	end
 	
 	macros:append{

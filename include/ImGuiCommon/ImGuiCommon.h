@@ -37,7 +37,7 @@ struct ImGuiCommon {
 
 	void onUpdate(std::function<void()> callback) {
 		ImGui_ImplOpenGL2_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
+		ImGui_ImplSDL2_NewFrame(window);
 		igNewFrame();
 	
 		callback();	

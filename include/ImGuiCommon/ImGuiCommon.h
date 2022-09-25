@@ -7,7 +7,7 @@
 #include "cimgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl2.h"
-#include "GLApp/gl.h"
+#include "GLCxx/gl.h"
 #include <functional>
 #include <SDL.h>
 

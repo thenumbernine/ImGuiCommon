@@ -9,6 +9,7 @@ Just define .fields then call "updateGUI" on the object.
 #include "ImGuiCommon/ImGuiCommon.h"
 #include "Common/String.h"
 #include "Common/Meta.h"
+#include "Tensor/Vector.h"
 
 namespace ImGuiCommon {
 
@@ -122,19 +123,37 @@ struct UpdateGUI<std::pair<A, B>> {
 };
 
 template<typename T>
-struct UpdateGUI<Tensor::Vector<T, 2>> {
-	static void exec(Tensor::Vector<T, 2>* ptr, std::string prefix) {
+struct UpdateGUI<Tensor::_vec1<T>> {
+	static void exec(Tensor::_vec1<T>* ptr, std::string prefix) {
+		UpdateGUI<T>::exec(ptr->v+0, prefix + " 0");
+	}
+};
+
+
+template<typename T>
+struct UpdateGUI<Tensor::_vec2<T>> {
+	static void exec(Tensor::_vec2<T>* ptr, std::string prefix) {
 		UpdateGUI<T>::exec(ptr->v+0, prefix + " 0");
 		UpdateGUI<T>::exec(ptr->v+1, prefix + " 1");
 	}
 };
 
 template<typename T>
-struct UpdateGUI<Tensor::Vector<T, 3>> {
-	static void exec(Tensor::Vector<T, 3>* ptr, std::string prefix) {
+struct UpdateGUI<Tensor::_vec3<T>> {
+	static void exec(Tensor::_vec3<T>* ptr, std::string prefix) {
 		UpdateGUI<T>::exec(ptr->v+0, prefix + " 0");
 		UpdateGUI<T>::exec(ptr->v+1, prefix + " 1");
 		UpdateGUI<T>::exec(ptr->v+2, prefix + " 2");
+	}
+};
+
+template<typename T>
+struct UpdateGUI<Tensor::_vec4<T>> {
+	static void exec(Tensor::_vec4<T>* ptr, std::string prefix) {
+		UpdateGUI<T>::exec(ptr->v+0, prefix + " 0");
+		UpdateGUI<T>::exec(ptr->v+1, prefix + " 1");
+		UpdateGUI<T>::exec(ptr->v+2, prefix + " 2");
+		UpdateGUI<T>::exec(ptr->v+3, prefix + " 3");
 	}
 };
 

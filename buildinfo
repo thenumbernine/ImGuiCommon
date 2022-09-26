@@ -1,6 +1,5 @@
 distName='ImGuiCommon'
 distType='inc'
-include:insert(cwd..'/include')
 macros:append{
 	'IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1',
 	

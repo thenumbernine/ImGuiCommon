@@ -123,8 +123,8 @@ struct UpdateGUI<std::pair<A, B>> {
 };
 
 template<typename T, int dim>
-struct UpdateGUI<Tensor::_vec<T,dim>> {
-	static void exec(Tensor::_vec<T,dim>* ptr, std::string prefix) {
+struct UpdateGUI<Tensor::vec<T,dim>> {
+	static void exec(Tensor::vec<T,dim>* ptr, std::string prefix) {
 		for (int i = 0; i < dim; ++i) {
 			UpdateGUI<T>::exec(ptr->s.data() + i, prefix + " " + std::to_string(i));
 		}

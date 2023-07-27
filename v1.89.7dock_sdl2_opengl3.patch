@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index d5462fc..0055aa1 100644
+index d5462fc..1df12f5 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -8,8 +8,13 @@ OBJS += ./imgui/imgui_draw.o
@@ -16,7 +16,7 @@ index d5462fc..0055aa1 100644
  
  UNAME_S := $(shell uname -s)
  
-@@ -18,8 +23,12 @@ AR := ar -rc
+@@ -18,8 +23,14 @@ AR := ar -rc
  ifeq ($(UNAME_S), Linux) #LINUX
  	ECHO_MESSAGE = "Linux"
  
@@ -27,6 +27,8 @@ index d5462fc..0055aa1 100644
  	CXXFLAGS += -I./imgui/
 +# Chris: for sdl2 support
 +	CXXFLAGS += -I/usr/include/SDL2
++# Chris: ... necessary? 	
++	CXXFLAGS += -lSDL2
  	CXXFLAGS += -Wall
  	CXXFLAGS += -shared -fPIC
  	CFLAGS = $(CXXFLAGS)

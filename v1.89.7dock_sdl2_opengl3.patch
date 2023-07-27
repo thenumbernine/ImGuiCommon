@@ -1,0 +1,32 @@
+diff --git a/Makefile b/Makefile
+index d5462fc..0055aa1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -8,8 +8,13 @@ OBJS += ./imgui/imgui_draw.o
+ OBJS += ./imgui/imgui_demo.o
+ OBJS += ./imgui/imgui_tables.o
+ OBJS += ./imgui/imgui_widgets.o
++# Chris: for sdl2 support
++OBJS += ./imgui/backends/imgui_impl_opengl3.o
++OBJS += ./imgui/backends/imgui_impl_sdl2.o
+ 
+ CXXFLAGS=-O2 -fno-exceptions -fno-rtti
++# Chris: for sdl2 support
++CXXFLAGS+= -DIMGUI_IMPL_API=extern\ \"C\"
+ 
+ UNAME_S := $(shell uname -s)
+ 
+@@ -18,8 +23,12 @@ AR := ar -rc
+ ifeq ($(UNAME_S), Linux) #LINUX
+ 	ECHO_MESSAGE = "Linux"
+ 
+-	OUTPUTNAME = cimgui.so
++#	OUTPUTNAME = cimgui.so
++# Chris: for sdl2 support
++	OUTPUTNAME = libcimgui_sdl-1.89.7dock.so
+ 	CXXFLAGS += -I./imgui/
++# Chris: for sdl2 support
++	CXXFLAGS += -I/usr/include/SDL2
+ 	CXXFLAGS += -Wall
+ 	CXXFLAGS += -shared -fPIC
+ 	CFLAGS = $(CXXFLAGS)

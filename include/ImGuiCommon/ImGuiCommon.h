@@ -5,8 +5,8 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "cimgui.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl2.h"
+#include "imgui_impl_sdl2.h"
+#include "imgui_impl_opengl3.h"
 #include "GLCxx/gl.h"
 #include <functional>
 #include <SDL.h>
@@ -22,11 +22,11 @@ struct ImGuiCommon {
 		igCreateContext(nullptr);
 		igStyleColorsDark(nullptr);
 		ImGui_ImplSDL2_InitForOpenGL(window, context);
-		ImGui_ImplOpenGL2_Init();
+		ImGui_ImplOpenGL3_Init(nullptr);
 	}
 
 	virtual ~ImGuiCommon() {
-		ImGui_ImplOpenGL2_Shutdown();
+		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplSDL2_Shutdown();
 		igDestroyContext(nullptr);
 	}
@@ -36,7 +36,7 @@ struct ImGuiCommon {
 	}
 
 	void onUpdate(std::function<void()> callback) {
-		ImGui_ImplOpenGL2_NewFrame();
+		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame();
 		igNewFrame();
 	
@@ -44,7 +44,7 @@ struct ImGuiCommon {
 		glViewport(0, 0, (int)igGetIO()->DisplaySize.x, (int)igGetIO()->DisplaySize.y);
 		
 		igRender();
-		ImGui_ImplOpenGL2_RenderDrawData(igGetDrawData());
+		ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 	}
 };
 

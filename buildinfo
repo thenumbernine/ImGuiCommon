@@ -18,4 +18,5 @@ elseif platform == 'linux' then
 	macros:append{
 		'IMGUI_IMPL_API=extern "C" ',
 	}
+	include:insert'/usr/local/include/imgui-1.89.7dock/'
 end

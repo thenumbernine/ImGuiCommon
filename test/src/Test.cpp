@@ -12,10 +12,6 @@ struct Test : public GLApp::GLApp {
 
 	using Super::Super;
 
-	virtual int getSDLInitFlags() {
-		return SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER;
-	}
-
 	virtual const char* getTitle() {
 		return "ImGui Test";
 	}

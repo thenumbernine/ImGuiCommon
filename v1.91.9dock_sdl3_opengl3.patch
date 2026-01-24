@@ -1,0 +1,30 @@
+diff --git a/Makefile b/Makefile
+index 2a52e0f..774d03d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -8,8 +8,15 @@ OBJS += ./imgui/imgui_draw.o
+ OBJS += ./imgui/imgui_demo.o
+ OBJS += ./imgui/imgui_tables.o
+ OBJS += ./imgui/imgui_widgets.o
++# For SDL3 support:
++OBJS += ./imgui/backends/imgui_impl_sdl3.o
++OBJS += ./imgui/backends/imgui_impl_opengl3.o
+ 
+ CXXFLAGS=-O2 -fno-exceptions -fno-rtti
++# For SDL3 support:
++CXXFLAGS += -DIMGUI_IMPL_API=extern\ \"C\"
++CXXFLAGS += -I/usr/include/SDL3
++CXXFLAGS += -lSDL3
+ 
+ UNAME_S := $(shell uname -s)
+ 
+@@ -18,7 +25,8 @@ AR := ar -rc
+ ifeq ($(UNAME_S), Linux) #LINUX
+ 	ECHO_MESSAGE = "Linux"
+ 
+-	OUTPUTNAME = cimgui.so
++	# For SDL3 support:
++	OUTPUTNAME = libcimgui_sdl3.so
+ 	CXXFLAGS += -I./imgui/
+ 	CXXFLAGS += -Wall
+ 	CXXFLAGS += -shared -fPIC
